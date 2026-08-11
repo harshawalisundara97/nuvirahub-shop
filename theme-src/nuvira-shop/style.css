@@ -125,10 +125,16 @@ button{ font-family: inherit; cursor: pointer; }
 }
 .ns-menu-toggle{
   display: none;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   color: var(--ns-ink);
+  padding: 6px;
 }
+.ns-menu-toggle .ns-icon-close{ display: none; }
+.ns-menu-toggle.is-open .ns-icon-open{ display: none; }
+.ns-menu-toggle.is-open .ns-icon-close{ display: block; }
 
 /* ============== 05 — Hero ============== */
 .ns-hero{
@@ -225,7 +231,7 @@ button{ font-family: inherit; cursor: pointer; }
   white-space: nowrap;
 }
 
-/* ============== 07 — Product grid (homepage teaser) ============== */
+/* ============== 07 — Product card (shared: homepage, shop, related, upsells) ============== */
 .ns-product-grid{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -243,11 +249,24 @@ button{ font-family: inherit; cursor: pointer; }
   aspect-ratio: 1 / 1;
   background: rgba(244,236,224,0.06);
   position: relative;
+  display: block;
 }
 .ns-product-media img{ width: 100%; height: 100%; object-fit: cover; }
+.ns-product-media .onsale{
+  background: var(--ns-chilli);
+  color: var(--ns-ink);
+  border-radius: var(--ns-radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  position: absolute;
+  top: 12px; left: 12px;
+  text-transform: uppercase;
+}
 .ns-product-body{ padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; }
 .ns-product-cat{ font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ns-ink-muted); }
-.ns-product-title{ font-size: 15px; font-weight: 600; margin: 0; line-height: 1.3; }
+.ns-product-title{ font-size: 15px; font-weight: 600; margin: 0; line-height: 1.3; color: var(--ns-ink); display: block; }
+.ns-product-title:hover{ color: var(--ns-accent); }
 .ns-product-foot{ display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
 .ns-product-price{ font-size: 14.5px; font-variant-numeric: tabular-nums; color: var(--ns-accent); font-weight: 600; }
 .ns-add-to-cart{
@@ -255,8 +274,12 @@ button{ font-family: inherit; cursor: pointer; }
   background: var(--ns-accent); color: var(--ns-accent-ink);
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; font-weight: 700; border: none;
+  flex-shrink: 0;
 }
+.ns-add-to-cart span{ line-height: 1; }
 .ns-add-to-cart:hover{ background: #f0c274; }
+.ns-add-to-cart.loading{ opacity: 0.7; }
+.ns-add-to-cart.added::after{ content: "✓"; margin-left: 2px; }
 
 /* ============== 08 — WooCommerce: shared ============== */
 .woocommerce, .woocommerce-page{ color: var(--ns-ink); }
@@ -326,50 +349,15 @@ button{ font-family: inherit; cursor: pointer; }
 }
 
 .woocommerce ul.products{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
   list-style: none;
   margin: 0; padding: 0;
 }
 .woocommerce ul.products li.product{
-  background: var(--ns-bg-raised);
-  border: 0.5px solid var(--ns-border);
-  border-radius: var(--ns-radius);
-  padding: 16px;
-  transition: border-color 0.15s ease;
-  position: relative;
+  list-style: none;
 }
-.woocommerce ul.products li.product:hover{ border-color: var(--ns-border-strong); }
-.woocommerce ul.products li.product a img{
-  border-radius: 8px;
-  margin-bottom: 12px;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-}
-.woocommerce ul.products li.product .woocommerce-loop-product__title{
-  font-size: 15px; font-weight: 600; color: var(--ns-ink); margin: 0 0 4px;
-}
-.woocommerce ul.products li.product .price{
-  color: var(--ns-accent); font-weight: 600; font-variant-numeric: tabular-nums; font-size: 14.5px;
-}
-.woocommerce ul.products li.product .button{
-  margin-top: 10px;
-  width: 100%;
-  text-align: center;
-  display: block;
-}
-.woocommerce ul.products li.product .onsale{
-  background: var(--ns-chilli);
-  color: var(--ns-ink);
-  border-radius: var(--ns-radius-pill);
-  font-size: 11px;
-  font-weight: 600;
-  padding: 4px 10px;
-  position: absolute;
-  top: 12px; left: 12px;
-  text-transform: uppercase;
-}
+/* Card visuals (.ns-product-card, .ns-product-media, .ns-product-title,
+   .ns-add-to-cart, etc.) live in section 07 and are shared by the
+   homepage teaser, shop archive, related products, and upsells. */
 
 .woocommerce nav.woocommerce-pagination ul{ display: flex; gap: 6px; border: none; }
 .woocommerce nav.woocommerce-pagination ul li{ border: none; }
@@ -533,9 +521,131 @@ button{ font-family: inherit; cursor: pointer; }
   gap: 8px;
 }
 
-/* ============== 13 — Responsive ============== */
+/* ============== 13 — My Account ============== */
+.woocommerce-account .woocommerce-MyAccount-navigation ul{
+  list-style: none; margin: 0 0 32px; padding: 0;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation-link a{
+  display: block;
+  padding: 10px 16px;
+  border-radius: var(--ns-radius-pill);
+  color: var(--ns-ink-muted);
+  font-size: 13.5px;
+}
+.woocommerce-account .woocommerce-MyAccount-navigation-link a:hover{
+  background: rgba(244,236,224,0.08); color: var(--ns-ink);
+}
+.woocommerce-account .woocommerce-MyAccount-navigation-link.is-active a{
+  background: var(--ns-accent); color: var(--ns-accent-ink);
+}
+.woocommerce-account .woocommerce-MyAccount-content{
+  background: var(--ns-bg-raised);
+  border-radius: var(--ns-radius);
+  padding: 24px;
+}
+.woocommerce form.login, .woocommerce form.register{
+  max-width: 420px;
+  margin: 0 auto;
+  background: var(--ns-bg-raised);
+  border-radius: var(--ns-radius);
+  padding: 28px;
+}
+.woocommerce-form-login-toggle, .woocommerce-form-register-toggle{
+  background: transparent; border: none; padding: 0 0 16px;
+}
+table.my_account_orders td.order-actions .button{
+  font-size: 12px; padding: 8px 14px; margin: 2px 4px 2px 0;
+}
+.woocommerce-account .order-status{
+  display: inline-block;
+  border-radius: var(--ns-radius-pill);
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: rgba(244,236,224,0.1);
+  color: var(--ns-ink-muted);
+}
+.woocommerce-account .order-status.status-completed{ background: var(--ns-leaf); color: var(--ns-bg); }
+.woocommerce-account .order-status.status-processing{ background: var(--ns-sky); color: var(--ns-bg); }
+.woocommerce-account .order-status.status-cancelled,
+.woocommerce-account .order-status.status-failed{ background: var(--ns-chilli); color: var(--ns-ink); }
+.woocommerce-address-fields .form-row{ margin-bottom: 14px; }
+
+/* ============== 14 — Order received / thank-you ============== */
+.woocommerce-order-received .woocommerce-thankyou-order-received{
+  font-family: var(--ns-font-display);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ns-accent);
+  margin: 0 0 24px;
+}
+.woocommerce-order-overview{
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0 0 32px;
+  padding: 20px;
+  background: var(--ns-bg-raised);
+  border-radius: var(--ns-radius);
+}
+.woocommerce-order-overview li{
+  font-size: 13px;
+  color: var(--ns-ink-muted);
+}
+.woocommerce-order-overview li strong{ display: block; color: var(--ns-ink); font-size: 15px; margin-top: 2px; }
+.woocommerce-order-details h2, .woocommerce-customer-details h2{
+  font-family: var(--ns-font-display); font-style: italic; font-size: 20px; margin: 32px 0 16px;
+}
+.woocommerce-columns--addresses{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px; list-style: none; margin: 0; padding: 0;
+}
+
+/* ============== 15 — Empty cart / empty search ============== */
+.woocommerce-cart .cart-empty{
+  text-align: center;
+  padding: 48px 24px;
+  background: var(--ns-bg-raised);
+  border-radius: var(--ns-radius);
+  color: var(--ns-ink-muted);
+  font-size: 15px;
+}
+.woocommerce-cart .wc-empty-cart-message + p.return-to-shop,
+.woocommerce-cart .return-to-shop{
+  text-align: center;
+  margin-top: 20px;
+}
+.ns-no-results{
+  text-align: center;
+  padding: 64px 24px;
+  background: var(--ns-bg-raised);
+  border-radius: var(--ns-radius);
+}
+.ns-no-results h1{
+  font-family: var(--ns-font-display); font-style: italic; font-size: 26px; margin: 0 0 12px;
+}
+.ns-no-results p{ color: var(--ns-ink-muted); margin: 0 0 20px; }
+
+/* ============== 16 — Responsive ============== */
 @media (max-width: 860px){
   .ns-nav{ display: none; }
+  .ns-nav.ns-nav--open{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--ns-bg-raised);
+    border-bottom: 0.5px solid var(--ns-border);
+    padding: 12px 24px 16px;
+  }
+  .ns-nav.ns-nav--open a{ padding: 10px 14px; }
+  .ns-header-row{ position: relative; }
   .ns-menu-toggle{ display: inline-flex; }
   .ns-product-grid, .woocommerce ul.products{
     grid-template-columns: repeat(2, 1fr) !important;

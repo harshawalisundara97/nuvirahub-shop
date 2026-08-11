@@ -24,6 +24,7 @@
 				'theme_location' => 'primary',
 				'container'      => false,
 				'menu_class'     => 'ns-nav',
+				'menu_id'        => 'ns-primary-nav',
 			) );
 			?>
 		<?php else : ?>
@@ -31,10 +32,13 @@
 		<?php endif; ?>
 
 		<a class="ns-cart-link" href="<?php echo function_exists( 'wc_get_cart_url' ) ? esc_url( wc_get_cart_url() ) : '#'; ?>">
-			Cart
+			<?php echo nuvira_shop_icon( 'cart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?>
 			<span class="ns-cart-count"><?php echo (int) nuvira_shop_cart_count(); ?></span>
 		</a>
 
-		<button class="ns-menu-toggle" type="button" aria-label="Menu">☰</button>
+		<button class="ns-menu-toggle" type="button" aria-label="<?php esc_attr_e( 'Menu', 'nuvira-shop' ); ?>" aria-expanded="false" aria-controls="ns-primary-nav">
+			<span class="ns-icon-open"><?php echo nuvira_shop_icon( 'menu' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?></span>
+			<span class="ns-icon-close"><?php echo nuvira_shop_icon( 'close' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?></span>
+		</button>
 	</div>
 </header>

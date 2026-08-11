@@ -4,7 +4,7 @@
 #         ./sync-theme.sh --watch  (auto-sync on every save; needs fswatch)
 
 set -e
-SRC="/Users/ranjana/Harsha/Projects/nuvira-shop/theme-src/nuvira-shop/"
+SRC="/Users/ranjana/Harsha/Projects/nuvirahub-shop/theme-src/nuvira-shop/"
 DEST="/Applications/XAMPP/xamppfiles/htdocs/nuvira-shop/wp-content/themes/nuvira-shop/"
 
 sync_once() {
