@@ -5,6 +5,7 @@
  *
  * @package NuviraShop
  */
+
 get_header();
 ?>
 
@@ -21,7 +22,8 @@ get_header();
 				?>
 			</h1>
 		</div>
-		<?php while ( have_posts() ) : the_post(); ?>
+		<?php while ( have_posts() ) : ?>
+			<?php the_post(); ?>
 			<article style="margin-bottom:2rem;">
 				<h2 style="font-family:var(--ns-font-display);font-style:italic;"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 				<div><?php the_excerpt(); ?></div>

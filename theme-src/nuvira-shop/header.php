@@ -4,6 +4,7 @@
  *
  * @package NuviraShop
  */
+
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -20,12 +21,14 @@
 
 		<?php if ( has_nav_menu( 'primary' ) ) : ?>
 			<?php
-			wp_nav_menu( array(
-				'theme_location' => 'primary',
-				'container'      => false,
-				'menu_class'     => 'ns-nav',
-				'menu_id'        => 'ns-primary-nav',
-			) );
+			wp_nav_menu(
+				array(
+					'theme_location' => 'primary',
+					'container'      => false,
+					'menu_class'     => 'ns-nav',
+					'menu_id'        => 'ns-primary-nav',
+				)
+			);
 			?>
 		<?php else : ?>
 			<?php nuvira_shop_fallback_menu(); ?>
