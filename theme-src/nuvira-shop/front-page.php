@@ -45,19 +45,9 @@ get_header();
 				'order'   => 'DESC',
 			) );
 			foreach ( $featured as $product ) :
-				?>
-				<a class="ns-product-card" href="<?php echo esc_url( $product->get_permalink() ); ?>">
-					<div class="ns-product-media">
-						<?php echo $product->get_image(); ?>
-					</div>
-					<div class="ns-product-body">
-						<div class="ns-product-title"><?php echo esc_html( $product->get_name() ); ?></div>
-						<div class="ns-product-foot">
-							<span class="ns-product-price"><?php echo wp_kses_post( $product->get_price_html() ); ?></span>
-						</div>
-					</div>
-				</a>
-			<?php endforeach; ?>
+				nuvira_shop_product_card( $product );
+			endforeach;
+			?>
 		</div>
 	</div>
 </section>
