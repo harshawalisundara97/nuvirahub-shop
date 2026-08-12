@@ -4,6 +4,7 @@
  *
  * @package NuviraShop
  */
+
 ?>
 <footer class="ns-footer">
 	<div class="ns-container">
@@ -32,7 +33,7 @@
 			</div>
 		</div>
 		<div class="ns-footer-bottom">
-			<span>&copy; <?php echo esc_html( date( 'Y' ) ); ?> Nuvirahub (Pvt) Ltd</span>
+			<span>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> Nuvirahub (Pvt) Ltd</span>
 			<span>Part of the Nuvirahub group — <a href="https://nuvirahub.com" style="color:var(--ns-accent);">nuvirahub.com</a></span>
 		</div>
 	</div>

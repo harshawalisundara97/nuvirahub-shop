@@ -4,6 +4,7 @@
  *
  * @package NuviraShop
  */
+
 get_header();
 ?>
 
@@ -38,12 +39,14 @@ get_header();
 
 		<div class="ns-product-grid">
 			<?php
-			$featured = wc_get_products( array(
-				'status' => 'publish',
-				'limit'  => 8,
-				'orderby' => 'date',
-				'order'   => 'DESC',
-			) );
+			$featured = wc_get_products(
+				array(
+					'status'  => 'publish',
+					'limit'   => 8,
+					'orderby' => 'date',
+					'order'   => 'DESC',
+				)
+			);
 			foreach ( $featured as $product ) :
 				nuvira_shop_product_card( $product );
 			endforeach;
