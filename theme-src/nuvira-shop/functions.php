@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'NUVIRA_SHOP_WHATSAPP', '94716722599' );
 
 require get_theme_file_path( '/inc/template-tags.php' );
+require get_theme_file_path( '/inc/admin.php' );
 
 /**
  * WhatsApp deep link with a URL-encoded pre-filled message.
