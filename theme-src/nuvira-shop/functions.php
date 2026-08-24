@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'NUVIRA_SHOP_WHATSAPP', '94716722599' );
 
 require get_theme_file_path( '/inc/template-tags.php' );
+require get_theme_file_path( '/inc/wishlist.php' );
 
 /**
  * WhatsApp deep link with a URL-encoded pre-filled message.
@@ -38,12 +39,6 @@ add_action(
 		add_theme_support( 'wc-product-gallery-zoom' );
 		add_theme_support( 'wc-product-gallery-lightbox' );
 		add_theme_support( 'wc-product-gallery-slider' );
-
-		register_nav_menus(
-			array(
-				'primary' => __( 'Primary Menu', 'nuvira-shop' ),
-			)
-		);
 	}
 );
 
@@ -55,6 +50,16 @@ add_action(
 	function () {
 		wp_enqueue_style( 'nuvira-shop-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
 		wp_enqueue_script( 'nuvira-shop-nav', get_theme_file_uri( '/assets/js/nav.js' ), array(), wp_get_theme()->get( 'Version' ), true );
+
+		wp_enqueue_script( 'nuvira-shop-wishlist', get_theme_file_uri( '/assets/js/wishlist.js' ), array(), wp_get_theme()->get( 'Version' ), true );
+		wp_localize_script(
+			'nuvira-shop-wishlist',
+			'nuviraWishlist',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'nuvira-wishlist' ),
+			)
+		);
 	}
 );
 
@@ -73,7 +78,7 @@ add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 add_action(
 	'woocommerce_before_main_content',
 	function () {
-		echo '<main class="ns-main"><div class="ns-container">';
+		echo '<main class="ns-main" id="ns-main-content"><div class="ns-container">';
 	}
 );
 add_action(
@@ -95,14 +100,4 @@ function nuvira_shop_cart_count() {
 	return WC()->cart->get_cart_contents_count();
 }
 
-/**
- * Register the default fallback menu when no "Primary Menu" is assigned yet.
- */
-function nuvira_shop_fallback_menu() {
-	echo '<ul class="ns-nav" id="ns-primary-nav">';
-	echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">Home</a></li>';
-	if ( function_exists( 'wc_get_page_permalink' ) ) {
-		echo '<li><a href="' . esc_url( wc_get_page_permalink( 'shop' ) ) . '">Shop</a></li>';
-	}
-	echo '</ul>';
-}
+
