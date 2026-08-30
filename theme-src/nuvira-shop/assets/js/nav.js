@@ -6,7 +6,7 @@
 	'use strict';
 
 	var toggle = document.querySelector( '.ns-menu-toggle' );
-	var nav = document.getElementById( 'ns-primary-nav' );
+	var nav = document.getElementById( 'ns-cat-bar-links' );
 
 	if ( ! toggle || ! nav ) {
 		return;
