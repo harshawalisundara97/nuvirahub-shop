@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-<main class="ns-section ns-container">
+<main class="ns-section ns-container" id="ns-main-content">
 	<?php
 	while ( have_posts() ) :
 		the_post();

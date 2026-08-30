@@ -9,7 +9,7 @@
 get_header();
 ?>
 
-<main class="ns-section ns-container">
+<main class="ns-section ns-container" id="ns-main-content">
 	<?php if ( have_posts() ) : ?>
 		<div class="ns-section-head">
 			<h1>
@@ -25,7 +25,7 @@ get_header();
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
 			<article style="margin-bottom:2rem;">
-				<h2 style="font-family:var(--ns-font-display);font-style:italic;"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+				<h2 style="font-family:var(--ns-font-display);font-weight:800;"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 				<div><?php the_excerpt(); ?></div>
 			</article>
 		<?php endwhile; ?>

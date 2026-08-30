@@ -1,6 +1,6 @@
 <?php
 /**
- * Header — sticky pill nav on a deep teal ground.
+ * Header — search-forward utility row + category navigation bar.
  *
  * @package NuviraShop
  */
@@ -10,38 +10,54 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&display=swap" rel="stylesheet">
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<a class="ns-skip-link" href="#ns-main-content"><?php esc_html_e( 'Skip to content', 'nuvira-shop' ); ?></a>
+
 <header class="ns-header">
-	<div class="ns-header-row">
+	<div class="ns-header-utility">
 		<a class="ns-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">Nuvira Shop</a>
 
-		<?php if ( has_nav_menu( 'primary' ) ) : ?>
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'primary',
-					'container'      => false,
-					'menu_class'     => 'ns-nav',
-					'menu_id'        => 'ns-primary-nav',
-				)
-			);
-			?>
-		<?php else : ?>
-			<?php nuvira_shop_fallback_menu(); ?>
-		<?php endif; ?>
+		<form class="ns-search-form" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<?php echo nuvira_shop_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?>
+			<label class="screen-reader-text" for="ns-search-input"><?php esc_html_e( 'Search products', 'nuvira-shop' ); ?></label>
+			<input id="ns-search-input" type="search" name="s" placeholder="<?php esc_attr_e( 'Search products…', 'nuvira-shop' ); ?>" value="<?php echo esc_attr( get_search_query() ); ?>">
+			<input type="hidden" name="post_type" value="product">
+		</form>
 
-		<a class="ns-cart-link" href="<?php echo function_exists( 'wc_get_cart_url' ) ? esc_url( wc_get_cart_url() ) : '#'; ?>">
-			<?php echo nuvira_shop_icon( 'cart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?>
-			<span class="ns-cart-count"><?php echo (int) nuvira_shop_cart_count(); ?></span>
-		</a>
+		<div class="ns-header-icons">
+			<a class="ns-icon-link" href="<?php echo function_exists( 'wc_get_page_permalink' ) ? esc_url( wc_get_page_permalink( 'myaccount' ) ) : '#'; ?>" aria-label="<?php esc_attr_e( 'My account', 'nuvira-shop' ); ?>">
+				<?php echo nuvira_shop_icon( 'user' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?>
+			</a>
+			<a class="ns-icon-link" href="<?php echo function_exists( 'wc_get_account_endpoint_url' ) ? esc_url( wc_get_account_endpoint_url( 'wishlist' ) ) : '#'; ?>" aria-label="<?php esc_attr_e( 'Wishlist', 'nuvira-shop' ); ?>">
+				<?php echo nuvira_shop_icon( 'heart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?>
+				<span class="ns-icon-badge ns-wishlist-count"><?php echo (int) nuvira_shop_wishlist_count(); ?></span>
+			</a>
+			<a class="ns-icon-link" href="<?php echo function_exists( 'wc_get_cart_url' ) ? esc_url( wc_get_cart_url() ) : '#'; ?>" aria-label="<?php esc_attr_e( 'Cart', 'nuvira-shop' ); ?>">
+				<?php echo nuvira_shop_icon( 'cart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?>
+				<span class="ns-icon-badge ns-cart-count"><?php echo (int) nuvira_shop_cart_count(); ?></span>
+			</a>
 
-		<button class="ns-menu-toggle" type="button" aria-label="<?php esc_attr_e( 'Menu', 'nuvira-shop' ); ?>" aria-expanded="false" aria-controls="ns-primary-nav">
-			<span class="ns-icon-open"><?php echo nuvira_shop_icon( 'menu' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?></span>
-			<span class="ns-icon-close"><?php echo nuvira_shop_icon( 'close' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?></span>
-		</button>
+			<?php if ( function_exists( 'pll_the_languages' ) ) : ?>
+				<div class="ns-lang-switch">
+					<?php
+					$nuvira_languages = pll_the_languages( array( 'raw' => 1 ) );
+					foreach ( (array) $nuvira_languages as $nuvira_language ) :
+						?>
+						<a class="ns-lang-link<?php echo ! empty( $nuvira_language['current_lang'] ) ? ' is-active' : ''; ?>" href="<?php echo esc_url( $nuvira_language['url'] ); ?>">
+							<?php echo esc_html( strtoupper( $nuvira_language['slug'] ) ); ?>
+						</a>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
+		</div>
 	</div>
+
+	<?php get_template_part( 'template-parts/category-nav' ); ?>
 </header>

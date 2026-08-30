@@ -9,17 +9,17 @@
 get_header();
 ?>
 
-<main class="ns-section ns-container">
+<main class="ns-section ns-container" id="ns-main-content">
 	<?php if ( have_posts() ) : ?>
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
 			<article style="margin-bottom:2rem;">
-				<h2 style="font-family:var(--ns-font-display);font-style:italic;"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+				<h2 style="font-family:var(--ns-font-display);font-weight:800;"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 				<div><?php the_excerpt(); ?></div>
 			</article>
 		<?php endwhile; ?>
 	<?php else : ?>
-		<p>Nothing here yet.</p>
+		<p><?php esc_html_e( 'Nothing here yet.', 'nuvira-shop' ); ?></p>
 	<?php endif; ?>
 </main>
 
