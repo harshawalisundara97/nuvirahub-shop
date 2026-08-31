@@ -13,6 +13,7 @@ define( 'NUVIRA_SHOP_WHATSAPP', '94716722599' );
 
 require get_theme_file_path( '/inc/template-tags.php' );
 require get_theme_file_path( '/inc/wishlist.php' );
+require get_theme_file_path( '/inc/bank-transfer.php' );
 
 /**
  * WhatsApp deep link with a URL-encoded pre-filled message.
@@ -98,6 +99,18 @@ function nuvira_shop_cart_count() {
 		return 0;
 	}
 	return WC()->cart->get_cart_contents_count();
+}
+
+/**
+ * Formatted cart subtotal for the header cart pill.
+ *
+ * @return string
+ */
+function nuvira_shop_cart_total() {
+	if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+		return wc_price( 0 );
+	}
+	return WC()->cart->get_cart_subtotal();
 }
 
 
