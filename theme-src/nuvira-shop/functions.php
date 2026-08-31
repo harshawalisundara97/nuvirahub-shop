@@ -14,6 +14,8 @@ define( 'NUVIRA_SHOP_WHATSAPP', '94716722599' );
 require get_theme_file_path( '/inc/template-tags.php' );
 require get_theme_file_path( '/inc/wishlist.php' );
 require get_theme_file_path( '/inc/bank-transfer.php' );
+require get_theme_file_path( '/inc/shop-filters.php' );
+require get_theme_file_path( '/inc/single-product.php' );
 
 /**
  * WhatsApp deep link with a URL-encoded pre-filled message.
@@ -61,6 +63,10 @@ add_action(
 				'nonce'   => wp_create_nonce( 'nuvira-wishlist' ),
 			)
 		);
+
+		if ( function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() ) ) {
+			wp_enqueue_script( 'nuvira-shop-view-toggle', get_theme_file_uri( '/assets/js/shop-view-toggle.js' ), array(), wp_get_theme()->get( 'Version' ), true );
+		}
 	}
 );
 
