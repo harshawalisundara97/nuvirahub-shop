@@ -69,4 +69,30 @@ if ( ! is_array( $nuvira_hero_categories ) ) {
 </section>
 <?php endif; ?>
 
+<section class="ns-value-strip">
+	<div class="ns-container ns-value-strip-grid">
+		<div class="ns-value-item">
+			<span class="ns-value-icon"><?php echo nuvira_shop_icon( 'truck' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?></span>
+			<div>
+				<strong><?php esc_html_e( 'Fast delivery', 'nuvira-shop' ); ?></strong>
+				<p><?php esc_html_e( 'Tracked shipping across Latvia, dispatched within 48 hours.', 'nuvira-shop' ); ?></p>
+			</div>
+		</div>
+		<div class="ns-value-item">
+			<span class="ns-value-icon"><?php echo nuvira_shop_icon( 'heart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?></span>
+			<div>
+				<strong><?php esc_html_e( 'Authentic origin', 'nuvira-shop' ); ?></strong>
+				<p><?php esc_html_e( 'Single-origin Ceylon spices, sourced direct — no relabeling.', 'nuvira-shop' ); ?></p>
+			</div>
+		</div>
+		<div class="ns-value-item">
+			<span class="ns-value-icon"><?php echo nuvira_shop_icon( 'user' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?></span>
+			<div>
+				<strong><?php esc_html_e( 'Real people, real help', 'nuvira-shop' ); ?></strong>
+				<p><?php esc_html_e( 'Questions before you order? Message us on WhatsApp.', 'nuvira-shop' ); ?></p>
+			</div>
+		</div>
+	</div>
+</section>
+
 <?php get_footer(); ?>

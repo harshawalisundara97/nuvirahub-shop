@@ -12,7 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Caprasimo&display=swap" rel="stylesheet">
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -21,8 +21,35 @@
 <a class="ns-skip-link" href="#ns-main-content"><?php esc_html_e( 'Skip to content', 'nuvira-shop' ); ?></a>
 
 <header class="ns-header">
+	<div class="ns-topbar">
+		<div class="ns-topbar-inner">
+			<span class="ns-topbar-ship">
+				<?php echo nuvira_shop_icon( 'truck' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?>
+				<?php esc_html_e( 'Free shipping on orders over €45', 'nuvira-shop' ); ?>
+			</span>
+			<div class="ns-topbar-right">
+				<a class="ns-topbar-phone" href="<?php echo esc_url( 'tel:+' . NUVIRA_SHOP_WHATSAPP ); ?>">+94 71 672 2599</a>
+				<?php if ( function_exists( 'pll_the_languages' ) ) : ?>
+					<div class="ns-lang-switch">
+						<?php
+						$nuvira_languages = pll_the_languages( array( 'raw' => 1 ) );
+						foreach ( (array) $nuvira_languages as $nuvira_language ) :
+							?>
+							<a class="ns-lang-link<?php echo ! empty( $nuvira_language['current_lang'] ) ? ' is-active' : ''; ?>" href="<?php echo esc_url( $nuvira_language['url'] ); ?>">
+								<?php echo esc_html( strtoupper( $nuvira_language['slug'] ) ); ?>
+							</a>
+						<?php endforeach; ?>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+
 	<div class="ns-header-utility">
-		<a class="ns-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">Nuvira Shop</a>
+		<a class="ns-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<span class="ns-wordmark">Nuvira</span>
+			<span class="ns-wordmark-tag"><?php esc_html_e( 'Shop', 'nuvira-shop' ); ?></span>
+		</a>
 
 		<form class="ns-search-form" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 			<?php echo nuvira_shop_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?>
@@ -39,23 +66,11 @@
 				<?php echo nuvira_shop_icon( 'heart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?>
 				<span class="ns-icon-badge ns-wishlist-count"><?php echo (int) nuvira_shop_wishlist_count(); ?></span>
 			</a>
-			<a class="ns-icon-link" href="<?php echo function_exists( 'wc_get_cart_url' ) ? esc_url( wc_get_cart_url() ) : '#'; ?>" aria-label="<?php esc_attr_e( 'Cart', 'nuvira-shop' ); ?>">
+			<a class="ns-cart-pill" href="<?php echo function_exists( 'wc_get_cart_url' ) ? esc_url( wc_get_cart_url() ) : '#'; ?>" aria-label="<?php esc_attr_e( 'Cart', 'nuvira-shop' ); ?>">
 				<?php echo nuvira_shop_icon( 'cart' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static inline SVG, no user input. ?>
+				<span class="ns-cart-total"><?php echo wp_kses_post( nuvira_shop_cart_total() ); ?></span>
 				<span class="ns-icon-badge ns-cart-count"><?php echo (int) nuvira_shop_cart_count(); ?></span>
 			</a>
-
-			<?php if ( function_exists( 'pll_the_languages' ) ) : ?>
-				<div class="ns-lang-switch">
-					<?php
-					$nuvira_languages = pll_the_languages( array( 'raw' => 1 ) );
-					foreach ( (array) $nuvira_languages as $nuvira_language ) :
-						?>
-						<a class="ns-lang-link<?php echo ! empty( $nuvira_language['current_lang'] ) ? ' is-active' : ''; ?>" href="<?php echo esc_url( $nuvira_language['url'] ); ?>">
-							<?php echo esc_html( strtoupper( $nuvira_language['slug'] ) ); ?>
-						</a>
-					<?php endforeach; ?>
-				</div>
-			<?php endif; ?>
 		</div>
 	</div>
 
